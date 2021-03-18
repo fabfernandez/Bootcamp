@@ -6,13 +6,10 @@ public class Ejercicio5 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("How many numbers? (N) ");
-        int showQuantity = scanner.nextInt();
+        System.out.println("How many answers do you need? (N)");
+        int answerCount = scanner.nextInt();
 
-        System.out.println("How many digits? (M) ");
-        int digitQuantity = scanner.nextInt();
-
-        System.out.println("What is the digit? (D) ");
+        System.out.println("What is the digit we are looking for? (D) ");
         int digit = scanner.nextInt();
 
         if (digit > 9 || digit < 0) {
@@ -20,9 +17,12 @@ public class Ejercicio5 {
             digit = scanner.nextInt();
         }
 
+        System.out.println("How many repetitions of that digit? (M) ");
+        int digitCount = scanner.nextInt();
+
         int count = 0;
-        for (Integer naturalNumber = 0; count < showQuantity; naturalNumber++) {
-            if (countDigits(naturalNumber, digit) == digitQuantity) {
+        for (Integer naturalNumber = 0; count < answerCount; naturalNumber++) {
+            if (countDigits(naturalNumber, digit) == digitCount) {
                 System.out.println(naturalNumber);
                 count++;
             }

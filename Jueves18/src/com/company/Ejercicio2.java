@@ -6,7 +6,7 @@ public class Ejercicio2 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("How many answers do you want? ");
+        System.out.println("How many answers do you need? ");
         int answerCount = scanner.nextInt();
 
         System.out.println("Tell me the magic number, please. ");
