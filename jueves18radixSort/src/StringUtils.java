@@ -64,7 +64,7 @@ public class StringUtils {
     }
 
     // Completa los elementos del arr agregando caracteres c
-    // a la izquierda, dejando a todos con la longitud del mayor elemento de arr
+    // a la izquierda, dejando a todos con la longitud del mayor elemento del arr
     public static void lNormalize(String[] arr, char c) {
         int maxLength = maxLength(arr);
 
