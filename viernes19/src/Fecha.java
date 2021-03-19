@@ -3,31 +3,31 @@ import java.util.GregorianCalendar;
 
 public class Fecha {
 
-    private GregorianCalendar calendar;
+    private LocalDate localDate;
 
     public Fecha() {
-        this.calendar = new GregorianCalendar();
+        this.localDate = LocalDate.now();
     }
 
-    public Fecha(int anio, int mes, int dia) {
-        this.calendar = new GregorianCalendar(anio, mes, dia);
+    public Fecha(int year, int month, int day) {
+        this.localDate = LocalDate.of(year, month, day);
     }
 
-    public GregorianCalendar getCalendar() {
-        return calendar;
+    public LocalDate getLocalDate() {
+        return localDate;
     }
 
-    public void setCalendar(GregorianCalendar calendar) {
-        this.calendar = calendar;
+    public void setLocalDate(LocalDate localDate) {
+        this.localDate = localDate;
     }
 
     public void sumarUnDia() {
-        this.calendar.add(GregorianCalendar.DAY_OF_MONTH, 1);
+        this.localDate = localDate.plusDays(1);
     }
 
-    public static boolean esCorrecta(int anio, int mes, int dia) {
+    public static boolean esCorrecta(int year, int month, int day) {
         try {
-            GregorianCalendar gregorianCalendar = new GregorianCalendar(anio, mes, dia);
+            LocalDate.of(year, month, day);
         } catch (Exception e) {
             return false;
         }
@@ -37,8 +37,13 @@ public class Fecha {
     @Override
     public String toString() {
         return "Fecha{" +
-                "calendar=" + calendar +
+                "calendar=" + localDate +
                 '}';
+    }
+
+    public static void main(String[] args) {
+        System.out.println(esCorrecta(2020, 80, 222));
+        System.out.println(esCorrecta(2020, 2, 2));
     }
 
 }
