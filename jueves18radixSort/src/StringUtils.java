@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class StringUtils {
 
     // Retorna una cadena compuesta por n caracteres c
@@ -74,4 +76,47 @@ public class StringUtils {
             arr[i] = lpad(arr[i], maxLength, c);
         }
     }
+
+
+    //public static String rpad(String s,char c,int n); idem lpad, pero agregando caracteres la derecha.
+
+    public static String rpad(String string, int length, char filler) {
+        int fillCount = length - string.length();
+
+        String filling = replicate(filler, fillCount);
+
+        return string + filling;
+    }
+
+    //public static String ltrim(String s); Retorna una cadena idéntica a s pero sin espacios a
+    //la izquierda.
+
+    public static String ltrim(String s) {
+        String answer = "";
+
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == ' ') {
+                answer = s.substring(i + 1);
+            } else {
+                i = s.length();
+            }
+        }
+        return answer;
+    }
+
+    //public static String rtrim(String s); idem ltrim, pero sin espacios a la derecha.
+
+    public static String rtrim(String s) {
+
+        String answer = "";
+
+        for (int i = s.length(); i > 0; i--) {
+            if (s.charAt(i - 1) == ' ') {
+                answer = s.substring(i - 1);
+            }
+        }
+        return answer;
+    }
+
+
 }

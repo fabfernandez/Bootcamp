@@ -79,7 +79,7 @@ public class RadixSort {
     public static void main(String[] args) {
 
         // "Tests" ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        System.out.println("Here are ten F:  " + StringUtils.replicate('F', 10));
+        System.out.println("FFF = " + StringUtils.replicate('F', 3));
 
 
         System.out.println("0090 = " + StringUtils.lpad("90", 4, '0'));
@@ -123,12 +123,15 @@ public class RadixSort {
         System.out.println("[00001, 55555, 00022, 00333] = " + Arrays.toString(stringArray2));
 
 
+        System.out.println("faba="+StringUtils.ltrim("   faba   "));
+
+
         // Tests end ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
         int arr[] = {16223, 898, 13, 906, 235, 23, 9, 1532, 6388, 2511, 8};
 
-        radixSort(arr);
+        //radixSort(arr);
 
         for (int i = 0; i < arr.length; i++) {
             System.out.print(arr[i] + (i < arr.length - 1 ? "," : ""));
