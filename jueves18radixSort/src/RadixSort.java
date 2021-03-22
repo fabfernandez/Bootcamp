@@ -59,7 +59,7 @@ public class RadixSort {
                 if (!hashMap.get(mapIndex).isEmpty()) {
                     ArrayList<String> stringArrayList = hashMap.get(mapIndex);
 
-                    for (int i = 0 ; i < stringArrayList.size() ; i++){
+                    for (int i = 0; i < stringArrayList.size(); i++) {
                         newStringArray[arrayIndex] = stringArrayList.get(i);
                         arrayIndex++;
                     }
@@ -123,7 +123,7 @@ public class RadixSort {
         System.out.println("[00001, 55555, 00022, 00333] = " + Arrays.toString(stringArray2));
 
 
-        System.out.println("faba="+StringUtils.ltrim("   faba   "));
+        System.out.println("faba=" + StringUtils.ltrim("   faba   ") + "=" + StringUtils.rtrim("   faba   ") + ".");
 
 
         // Tests end ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

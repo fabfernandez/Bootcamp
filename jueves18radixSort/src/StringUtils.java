@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 public class StringUtils {
 
@@ -110,13 +109,18 @@ public class StringUtils {
 
         String answer = "";
 
-        for (int i = s.length(); i > 0; i--) {
-            if (s.charAt(i - 1) == ' ') {
-                answer = s.substring(i - 1);
+        for (int i = s.length() - 1; i > 0; i--) {
+            if (s.charAt(i) == ' ') {
+                answer = s.substring(0, i);
+            } else {
+                i = 0;
             }
         }
         return answer;
     }
+
+
+
 
 
 }
