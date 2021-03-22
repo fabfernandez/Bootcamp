@@ -122,8 +122,16 @@ public class RadixSort {
 
         System.out.println("[00001, 55555, 00022, 00333] = " + Arrays.toString(stringArray2));
 
+        String fabaString = "   faba   ";
+        System.out.println("faba="
+                + StringUtils.ltrim(fabaString)
+                + "="
+                + StringUtils.rtrim(fabaString)
+                + "="
+                + StringUtils.trim(fabaString) +".");
 
-        System.out.println("faba=" + StringUtils.ltrim("   faba   ") + "=" + StringUtils.rtrim("   faba   ") + ".");
+
+        System.out.println("Testing indexOfN: 9 = " + StringUtils.indexOfN("John|Paul|George|Ringo", '|', 2));
 
 
         // Tests end ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

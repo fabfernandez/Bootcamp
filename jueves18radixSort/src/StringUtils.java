@@ -119,8 +119,30 @@ public class StringUtils {
         return answer;
     }
 
+    public static String trim(String s) {
+        return rtrim(ltrim(s));
+    }
 
+    //public static int indexOfN(String s,char c,int n); Retorna la posición de la n-ésima
+    //ocurrencia del carácter c dentro de s, o -1 si s no contiene a c.
+    // Por ejemplo, si s =“John|Paul|George|Ringo”, c = ‘|’ y n=2, la función debe retornar la posicióon de la
+    //segunda ocurrencia del carácter ‘|’ (pipe) dentro de la cadena s. Que, en este caso, es: 9.
 
+    public static int indexOfN(String s, char c, int n) {
 
+        int counter = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+
+            if (counter == n) {
+                return i - 1;
+            }
+
+            if (s.charAt(i) == c) {
+                counter++;
+            }
+        }
+        return -1;
+    }
 
 }
