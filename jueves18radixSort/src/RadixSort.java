@@ -5,74 +5,81 @@ import java.util.HashMap;
 public class RadixSort {
     public static void radixSort(int[] arr) {
 
-        // PROGRAMAR AQUI
-
         //1 convertir a String[]
         String[] stringArray = StringUtils.toStringArray(arr);
 
         //2 completar los elementos del array, usar lNormalize
         StringUtils.lNormalize(stringArray, '0');
-        int elemLength = stringArray[0].length(); //this is the same for all elements after normalizing
+        int elemLength = stringArray[0].length();
+        //El largo de los elementos es el mismo para todos los elementos, porque estan normalizados.
 
         //3 obtener 10 listas vacias o un map
         HashMap<Integer, ArrayList<String>> hashMap = new HashMap<>();
-        int length = stringArray.length;
-        ArrayList<String> emptyStringList = new ArrayList<>();
 
-        hashMap.put(0, emptyStringList);
-        hashMap.put(1, emptyStringList);
-        hashMap.put(2, emptyStringList);
-        hashMap.put(3, emptyStringList);
-        hashMap.put(4, emptyStringList);
-        hashMap.put(5, emptyStringList);
-        hashMap.put(6, emptyStringList);
-        hashMap.put(7, emptyStringList);
-        hashMap.put(8, emptyStringList);
-        hashMap.put(9, emptyStringList);
+        hashMap.put(0, new ArrayList<>());
+        hashMap.put(1, new ArrayList<>());
+        hashMap.put(2, new ArrayList<>());
+        hashMap.put(3, new ArrayList<>());
+        hashMap.put(4, new ArrayList<>());
+        hashMap.put(5, new ArrayList<>());
+        hashMap.put(6, new ArrayList<>());
+        hashMap.put(7, new ArrayList<>());
+        hashMap.put(8, new ArrayList<>());
+        hashMap.put(9, new ArrayList<>());
 
-        //4 recorrer el array, en cada elemento miramos el ultimo digito y ponemos el elemento entero
-        // en la lista que corresponda
 
-        String[] newStringArray = new String[length];
+        //Recorrer digito por digito, empezando por el ultimo digito.
+        for (int lengthControl = 1; lengthControl < elemLength + 1; lengthControl++) {
 
-        for (int lengthControl = 1; lengthControl < elemLength; lengthControl++) {
+            //Recorrer el array y guardar en el hashMap
+            storeInHashMap(hashMap, stringArray, lengthControl);
 
-            for (int i = 0; i < length; i++) {
-                String element = stringArray[i];
+            //recorremos el mapa en orden y generamos el array nuevamente
 
-                Character digit = element.charAt(elemLength - lengthControl);
+            ArrayList<String> stringBuffer = new ArrayList<>();
 
-                Integer intDigit = Integer.parseInt(digit.toString());
+            for (int key = 0; key < 10; key++) {
 
-                ArrayList<String> stringList = hashMap.get(intDigit);
+                if (!hashMap.get(key).isEmpty()) {
+                    ArrayList<String> strings = hashMap.get(key);
 
-                stringList.add(element);
-
-                hashMap.put(intDigit, stringList);
-            }
-
-            //5 recorremos las listas en orden y generamos el array nuevamente
-
-            int arrayIndex = 0;
-            for (int mapIndex = 0; mapIndex < 10; mapIndex++) {
-
-                if (!hashMap.get(mapIndex).isEmpty()) {
-                    ArrayList<String> stringArrayList = hashMap.get(mapIndex);
-
-                    for (int i = 0; i < stringArrayList.size(); i++) {
-                        newStringArray[arrayIndex] = stringArrayList.get(i);
-                        arrayIndex++;
+                    for (String string : strings) {
+                        stringBuffer.add(string);
                     }
+
+                    hashMap.put(key, new ArrayList<>()); //Vaciar el hashmap
                 }
             }
+            //Sobreescribir el array con los numeros ordenados
+            int index = 0;
+            for (String string : stringBuffer) {
+                stringArray[index] = string;
+                index++;
+            }
         }
 
-        int[] newIntArray = StringUtils.toIntArray(newStringArray);
+        int[] newIntArray = StringUtils.toIntArray(stringArray);
 
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = newIntArray[i];
+        System.arraycopy(newIntArray, 0, arr, 0, arr.length);
+
+    }
+
+    private static void storeInHashMap(HashMap<Integer, ArrayList<String>> hashMap, String[] stringArray, int lengthControl) {
+
+        int elemLength = stringArray[0].length();
+
+        //Recorrer el array y guardar en el hashMap
+        for (String element : stringArray) {
+            char digit = element.charAt(elemLength - lengthControl);
+
+            Integer intDigit = Integer.parseInt(Character.toString(digit));
+
+            ArrayList<String> stringList = hashMap.get(intDigit);
+
+            stringList.add(element);
+
+            hashMap.put(intDigit, stringList);
         }
-
     }
 
 
@@ -128,7 +135,7 @@ public class RadixSort {
                 + "="
                 + StringUtils.rtrim(fabaString)
                 + "="
-                + StringUtils.trim(fabaString) +".");
+                + StringUtils.trim(fabaString) + ".");
 
 
         System.out.println("Testing indexOfN: 9 = " + StringUtils.indexOfN("John|Paul|George|Ringo", '|', 2));
@@ -137,9 +144,13 @@ public class RadixSort {
         // Tests end ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-        int arr[] = {16223, 898, 13, 906, 235, 23, 9, 1532, 6388, 2511, 8};
+        int[] arr = {16223, 898, 13, 906, 235, 23, 9, 1532, 6388, 2511, 8};
 
-        //radixSort(arr);
+        System.out.println("TESTING RADIX SORT: ");
+
+        System.out.println(Arrays.toString(arr));
+
+        radixSort(arr);
 
         for (int i = 0; i < arr.length; i++) {
             System.out.print(arr[i] + (i < arr.length - 1 ? "," : ""));
