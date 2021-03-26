@@ -55,4 +55,19 @@ public abstract class Vehiculo {
     public void setCantidadRuedas(int cantidadRuedas) {
         this.cantidadRuedas = cantidadRuedas;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Vehiculo vehiculo = (Vehiculo) o;
+
+        return patente.equals(vehiculo.patente);
+    }
+
+    @Override
+    public int hashCode() {
+        return patente.hashCode();
+    }
 }

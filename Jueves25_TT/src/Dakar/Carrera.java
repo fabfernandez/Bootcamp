@@ -1,6 +1,7 @@
 package Dakar;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Carrera {
     private int distancia;
@@ -9,7 +10,7 @@ public class Carrera {
     private int cantidadDeVehiculosPermitidos;
     private List<Vehiculo> vehiculos;
 
-    public void darDeAltaAuto(int velocidad, int aceleracion, int anguloDeGiro, String patente){
+    public void darDeAltaAuto(int velocidad, int aceleracion, int anguloDeGiro, String patente) {
         verificarSiHayEspacio();
 
         Auto auto = new Auto();
@@ -21,7 +22,7 @@ public class Carrera {
         vehiculos.add(auto);
     }
 
-    public void darDeAltaMoto(int velocidad, int aceleracion, int anguloDeGiro, String patente){
+    public void darDeAltaMoto(int velocidad, int aceleracion, int anguloDeGiro, String patente) {
         verificarSiHayEspacio();
 
         Moto moto = new Moto();
@@ -33,13 +34,35 @@ public class Carrera {
         vehiculos.add(moto);
     }
 
-    private void verificarSiHayEspacio(){
-       if (vehiculos.size()  >= cantidadDeVehiculosPermitidos){
-           throw new RuntimeException("Cantidad maxima de vehiculos alcanzada para esta carrera.");
-       }
+    private void verificarSiHayEspacio() {
+        if (vehiculos.size() >= cantidadDeVehiculosPermitidos) {
+            throw new RuntimeException("Cantidad maxima de vehiculos alcanzada para esta carrera.");
+        }
     }
 
-    public Carrera(int distancia, int premioEnDolares, String nombre, int cantidadDeVehiculosPermitidos, List<Vehiculo> vehiculos) {
+    public void eliminarVehiculo(Vehiculo vehiculo) {
+        if (vehiculos.contains(vehiculo)) {
+            vehiculos.remove(vehiculo);
+        } else {
+            throw new RuntimeException("El vehiculo ingresado no esta en esta carrera.");
+        }
+    }
+
+    public void eliminarVehiculoConPatente(String unaPatente) {
+
+        List<Vehiculo> vehiculosFiltrados = vehiculos
+                .stream().filter(vehiculo -> vehiculo.getPatente().equals(unaPatente)).collect(Collectors.toList());
+
+        if (vehiculosFiltrados.size() > 0) {
+            vehiculos.remove(vehiculosFiltrados.get(0));
+        }
+    }
+
+    public Carrera(int distancia,
+                   int premioEnDolares,
+                   String nombre,
+                   int cantidadDeVehiculosPermitidos,
+                   List<Vehiculo> vehiculos) {
         this.distancia = distancia;
         this.premioEnDolares = premioEnDolares;
         this.nombre = nombre;
