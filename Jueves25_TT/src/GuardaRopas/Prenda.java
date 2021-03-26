@@ -1,4 +1,4 @@
-package Model;
+package GuardaRopas;
 
 public class Prenda {
     private String marca;

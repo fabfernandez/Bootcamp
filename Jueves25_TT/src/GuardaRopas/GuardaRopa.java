@@ -1,4 +1,4 @@
-import Model.Prenda;
+package GuardaRopas;
 
 import java.util.ArrayList;
 import java.util.HashMap;
