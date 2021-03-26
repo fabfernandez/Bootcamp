@@ -1,6 +1,6 @@
 package Dakar;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Carrera {
@@ -8,7 +8,7 @@ public class Carrera {
     private int premioEnDolares;
     private String nombre;
     private int cantidadDeVehiculosPermitidos;
-    private List<Vehiculo> vehiculos;
+    private ArrayList<Vehiculo> vehiculos;
 
     public void darDeAltaAuto(int velocidad, int aceleracion, int anguloDeGiro, String patente) {
         verificarSiHayEspacio();
@@ -20,6 +20,8 @@ public class Carrera {
         auto.setPatente(patente);
 
         vehiculos.add(auto);
+
+        System.out.println("Se dio de alta auto patente " + patente + " ::::::: " + auto.toString());
     }
 
     public void darDeAltaMoto(int velocidad, int aceleracion, int anguloDeGiro, String patente) {
@@ -43,6 +45,7 @@ public class Carrera {
     public void eliminarVehiculo(Vehiculo vehiculo) {
         if (vehiculos.contains(vehiculo)) {
             vehiculos.remove(vehiculo);
+            System.out.println("Se elimino auto patente " + vehiculo.getPatente() + " ::::::: " + vehiculo.toString());
         } else {
             throw new RuntimeException("El vehiculo ingresado no esta en esta carrera.");
         }
@@ -54,15 +57,23 @@ public class Carrera {
                 .stream().filter(vehiculo -> vehiculo.getPatente().equals(unaPatente)).collect(Collectors.toList());
 
         if (vehiculosFiltrados.size() > 0) {
-            vehiculos.remove(vehiculosFiltrados.get(0));
+            eliminarVehiculo(vehiculosFiltrados.get(0));
         }
     }
+
+    public Vehiculo ganador() {
+
+        vehiculos.sort(Comparator.comparing(Vehiculo::calcularPuntaje));
+
+        return vehiculos.get(vehiculos.size()-1);
+    }
+
 
     public Carrera(int distancia,
                    int premioEnDolares,
                    String nombre,
                    int cantidadDeVehiculosPermitidos,
-                   List<Vehiculo> vehiculos) {
+                   ArrayList<Vehiculo> vehiculos) {
         this.distancia = distancia;
         this.premioEnDolares = premioEnDolares;
         this.nombre = nombre;
@@ -106,7 +117,14 @@ public class Carrera {
         return vehiculos;
     }
 
-    public void setVehiculos(List<Vehiculo> vehiculos) {
+    public void setVehiculos(ArrayList<Vehiculo> vehiculos) {
         this.vehiculos = vehiculos;
+    }
+
+    @Override
+    public String toString() {
+        return "Carrera{" +
+                "vehiculos=" + vehiculos +
+                '}';
     }
 }

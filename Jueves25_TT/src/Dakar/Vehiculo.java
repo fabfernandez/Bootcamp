@@ -1,12 +1,14 @@
 package Dakar;
 
-public abstract class Vehiculo {
+public abstract class Vehiculo implements Comparable<Vehiculo>{
     private int velocidad;
     private int aceleracion;
     private int anguloDeGiro;
     private String patente;
     private int peso;
     private int cantidadRuedas;
+
+
 
     public int getVelocidad() {
         return velocidad;
@@ -69,5 +71,22 @@ public abstract class Vehiculo {
     @Override
     public int hashCode() {
         return patente.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Vehiculo{" +
+                "velocidad=" + velocidad +
+                ", aceleracion=" + aceleracion +
+                ", anguloDeGiro=" + anguloDeGiro +
+                ", patente='" + patente + '\'' +
+                ", peso=" + peso +
+                ", cantidadRuedas=" + cantidadRuedas +
+                '}';
+    }
+
+
+    public Double calcularPuntaje() {
+        return velocidad * 0.5 * aceleracion / (anguloDeGiro * (peso - cantidadRuedas * 100));
     }
 }
