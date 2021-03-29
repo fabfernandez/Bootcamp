@@ -10,19 +10,16 @@ import java.util.Map;
 
 public class CasaService {
 
-    private static final double PRECIO = 800;
-
     public static DetalleCasaDTO getDetalle(CasaDTO casa) {
 
         Map<HabitacionDTO, Double> areasPorHabitacion = calcularAreaHabitaciones(casa);
         double areaTotal = calcularAreaTotal(areasPorHabitacion);
 
-        return DetalleCasaDTO.builder()
-                .areaPorHabitacion(areasPorHabitacion)
-                .metrosCuadrados(areaTotal)
-                .valor(calcularValor(areaTotal))
-                .habitacionMasGrande(getHabitacionMasGrande(areasPorHabitacion))
-                .build();
+        return new DetalleCasaDTO(areaTotal,
+                calcularValor(areaTotal, casa.getValorMetroCuadrado()),
+                getHabitacionMasGrande(areasPorHabitacion),
+                areasPorHabitacion
+        );
     }
 
     private static HabitacionDTO getHabitacionMasGrande(Map<HabitacionDTO, Double> areasPorHabitacion) {
@@ -40,8 +37,8 @@ public class CasaService {
         return habitacionMasGrande;
     }
 
-    private static double calcularValor(double areaTotal) {
-        return areaTotal * PRECIO;
+    private static double calcularValor(double areaTotal, double valorMetroCuadrado) {
+        return areaTotal * valorMetroCuadrado;
     }
 
     private static double calcularAreaTotal(Map<HabitacionDTO, Double> areas) {

@@ -1,6 +1,6 @@
 package com.example.clase2spring.dto;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,9 +8,9 @@ import java.util.Map;
 
 @Setter
 @Getter
-@Builder
+@AllArgsConstructor
 public class DetalleCasaDTO {
-    private double metrosCuadrados;
+    private double areaTotal;
     private double valor;
     private HabitacionDTO habitacionMasGrande;
     private Map<HabitacionDTO, Double> areaPorHabitacion;
