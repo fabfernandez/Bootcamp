@@ -28,6 +28,8 @@ public class DemoCarrera {
 
         carrera.eliminarVehiculoConPatente("420");
 
+        carrera.socorrer("NEW_SLOWW");
+
         System.out.println("AND THE WINNER IS:         " + carrera.ganador().toString());
 
     }

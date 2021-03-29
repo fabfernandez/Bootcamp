@@ -1,6 +1,6 @@
 package Dakar;
 
-public abstract class Vehiculo implements Comparable<Vehiculo>{
+public abstract class Vehiculo{
     private int velocidad;
     private int aceleracion;
     private int anguloDeGiro;

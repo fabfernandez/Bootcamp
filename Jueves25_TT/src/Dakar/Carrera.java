@@ -52,12 +52,18 @@ public class Carrera {
     }
 
     public void eliminarVehiculoConPatente(String unaPatente) {
+        eliminarVehiculo(buscarPorPatente(unaPatente));
+    }
+
+    private Vehiculo buscarPorPatente(String patente) {
 
         List<Vehiculo> vehiculosFiltrados = vehiculos
-                .stream().filter(vehiculo -> vehiculo.getPatente().equals(unaPatente)).collect(Collectors.toList());
+                .stream().filter(vehiculo -> vehiculo.getPatente().equals(patente)).collect(Collectors.toList());
 
         if (vehiculosFiltrados.size() > 0) {
-            eliminarVehiculo(vehiculosFiltrados.get(0));
+            return vehiculosFiltrados.get(0);
+        } else {
+            throw new RuntimeException("Vehiculo con patente " + patente + " no encontrado.");
         }
     }
 
@@ -65,9 +71,32 @@ public class Carrera {
 
         vehiculos.sort(Comparator.comparing(Vehiculo::calcularPuntaje));
 
-        return vehiculos.get(vehiculos.size()-1);
+        return vehiculos.get(vehiculos.size() - 1);
     }
 
+    public void socorrer(String patente) {
+
+        Vehiculo vehiculo = buscarPorPatente(patente);
+
+        if (vehiculo instanceof Auto) {
+            Auto auto = (Auto) vehiculo;
+            socorrerAuto(auto);
+        }
+        if (vehiculo instanceof Moto) {
+            Moto moto = (Moto) vehiculo;
+            socorrerMoto(moto);
+        }
+    }
+
+    private void socorrerAuto(Auto auto) {
+        SocorristaAuto socorristaAuto = new SocorristaAuto();
+        socorristaAuto.socorrer(auto);
+    }
+
+    private void socorrerMoto(Moto moto) {
+        SocorristaMoto socorristaMoto = new SocorristaMoto();
+        socorristaMoto.socorrer(moto);
+    }
 
     public Carrera(int distancia,
                    int premioEnDolares,
