@@ -104,7 +104,7 @@ public class ArticleServiceImpl implements ArticleService {
         return articles.stream().filter(article -> {
             try {
                 Method method = article.getClass().getMethod("get" + StringUtils.capitalize(key));
-
+                //return true if the value equals the method call
                 return method.invoke(article).equals(value);
             } catch (Exception e) {
                 e.printStackTrace();
