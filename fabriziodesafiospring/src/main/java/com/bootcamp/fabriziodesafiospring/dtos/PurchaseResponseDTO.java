@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class PurchaseResponseDTO {
-    private TicketDTO ticketDTO;
-    private StatusCodeDTO statusCodeDTO;
+    private TicketDTO ticket;
+    private StatusCodeDTO statusCode;
 }

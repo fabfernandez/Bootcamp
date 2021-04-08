@@ -50,9 +50,7 @@ public class ArticleServiceImpl implements ArticleService {
             output = order(output, allParams.get("order"));
         }
 
-
-        return output;
-
+        return returnIfNotNullOrEmpty(output);
     }
 
     @Override
@@ -83,7 +81,7 @@ public class ArticleServiceImpl implements ArticleService {
             articleFound.setName(requestedArticle.getName());
             articleFound.setBrand(requestedArticle.getBrand());
             articleFound.setQuantity(requestedArticle.getQuantity());
-            
+
             correspondingArticles.add(articleFound);
         }
 
@@ -174,9 +172,9 @@ public class ArticleServiceImpl implements ArticleService {
         return articleDTOS;
     }
 
-    private List<ArticleDTO> returnIfNotNull(List<ArticleDTO> articleDTOS) {
+    private List<ArticleDTO> returnIfNotNullOrEmpty(List<ArticleDTO> articleDTOS) {
         if (Objects.nonNull(articleDTOS)) {
-            return articleDTOS;
+            if (!articleDTOS.isEmpty()) return articleDTOS;
         }
         throw new NoArticlesMatchFilter();
     }

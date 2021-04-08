@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
 
@@ -34,8 +33,7 @@ public class ArticleController {
 
     @GetMapping(value = "/articles")
     public ResponseEntity<List<ArticleDTO>> getArticles(
-            @RequestParam(required = false) Map<String, String> allParams)
-            throws FileNotFoundException {
+            @RequestParam(required = false) Map<String, String> allParams) {
         System.out.println("Params size: " + allParams.size() + " and cointains: " + allParams.toString());
         return new ResponseEntity<>(articleService.process(allParams), HttpStatus.OK);
     }
