@@ -4,6 +4,7 @@ import com.bootcamp.fabriziodesafiospring.dtos.*;
 import com.bootcamp.fabriziodesafiospring.entities.Article;
 import com.bootcamp.fabriziodesafiospring.exceptions.*;
 import com.bootcamp.fabriziodesafiospring.repositories.ArticleRepository;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,8 +12,6 @@ import org.springframework.stereotype.Service;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,7 +36,6 @@ public class ArticleServiceImpl implements ArticleService {
         }
 
         List<ArticleDTO> output = allArticles;
-        //TODO limit 2 filters
 
         for (Map.Entry<String, String> param : allParams.entrySet()) {
             if (param.getKey().equals("order")) {
