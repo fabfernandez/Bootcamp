@@ -1,10 +1,8 @@
 package com.bootcamp.fabriziodesafiospring.services;
 
-import com.bootcamp.fabriziodesafiospring.dtos.ArticleDTO;
+import com.bootcamp.fabriziodesafiospring.dtos.*;
 import com.bootcamp.fabriziodesafiospring.entities.Article;
-import com.bootcamp.fabriziodesafiospring.exceptions.NoArticlesMatchFilter;
-import com.bootcamp.fabriziodesafiospring.exceptions.OrderOutOfBounds;
-import com.bootcamp.fabriziodesafiospring.exceptions.TooManyFilters;
+import com.bootcamp.fabriziodesafiospring.exceptions.*;
 import com.bootcamp.fabriziodesafiospring.repositories.ArticleRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,21 +26,6 @@ public class ArticleServiceImpl implements ArticleService {
     public ArticleServiceImpl(ArticleRepository articleRepository) throws FileNotFoundException {
         this.articleRepository = articleRepository;
         allArticles = mapIntoDtos(articleRepository.listAll());
-    }
-
-    private List<ArticleDTO> filter(List<ArticleDTO> articles, String key, String value) {
-
-        return articles.stream().filter(article -> {
-            try {
-                Method method = article.getClass().getMethod("get" + StringUtils.capitalize(key));
-
-                return method.invoke(article).equals(value);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return false;
-        }).collect(Collectors.toList());
     }
 
     @Override
@@ -70,6 +53,69 @@ public class ArticleServiceImpl implements ArticleService {
 
         return output;
 
+    }
+
+    @Override
+    public PurchaseResponseDTO purchase(PurchaseRequestDTO purchaseRequestDTO) {
+
+        //generate id ticket
+        int ticketId = 123;
+
+        //check for stock available
+        List<ArticleBasicDTO> requestedArticles = purchaseRequestDTO.getArticles();
+
+        List<ArticleDTO> correspondingArticles = new ArrayList<>();
+
+        for (ArticleBasicDTO requestedArticle : requestedArticles) {
+            List<ArticleDTO> articlesFound =
+                    filter(allArticles, "productId", requestedArticle.getProductId());
+
+            if (articlesFound.isEmpty()) throw new ArticleNotFound(requestedArticle.toString());
+
+            ArticleDTO articleFound = articlesFound.get(0);
+            int availableStock = parsePrice(articleFound.getQuantity());
+            int requestedStock = parsePrice(requestedArticle.getQuantity());
+
+            if (availableStock < requestedStock) {
+                throw new NotEnoughStock(requestedArticle.toString());
+            }
+
+            articleFound.setName(requestedArticle.getName());
+            articleFound.setBrand(requestedArticle.getBrand());
+            articleFound.setQuantity(requestedArticle.getQuantity());
+            
+            correspondingArticles.add(articleFound);
+        }
+
+        //calculate total $
+        int total = 0;
+        for (ArticleDTO article : correspondingArticles) {
+            total = total + parsePrice(article.getPrice()) * Integer.parseInt(article.getQuantity());
+        }
+
+        //put the articles in the ticket
+        TicketDTO ticket = new TicketDTO(ticketId, requestedArticles, total);
+
+        //create status code and message
+        StatusCodeDTO statusCodeDTO = new StatusCodeDTO(200, "Congratulations! Purchase Successful");
+
+        return new PurchaseResponseDTO(ticket, statusCodeDTO);
+
+    }
+
+    private List<ArticleDTO> filter(List<ArticleDTO> articles, String key, String value) {
+
+        return articles.stream().filter(article -> {
+            try {
+                Method method = article.getClass().getMethod("get" + StringUtils.capitalize(key));
+
+                return method.invoke(article).equals(value);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return false;
+        }).collect(Collectors.toList());
     }
 
     private List<ArticleDTO> order(List<ArticleDTO> list, String order) {

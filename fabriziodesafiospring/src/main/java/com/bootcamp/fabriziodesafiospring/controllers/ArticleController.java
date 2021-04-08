@@ -1,13 +1,13 @@
 package com.bootcamp.fabriziodesafiospring.controllers;
 
 import com.bootcamp.fabriziodesafiospring.dtos.ArticleDTO;
+import com.bootcamp.fabriziodesafiospring.dtos.PurchaseRequestDTO;
+import com.bootcamp.fabriziodesafiospring.dtos.PurchaseResponseDTO;
 import com.bootcamp.fabriziodesafiospring.services.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -33,10 +33,17 @@ public class ArticleController {
     // /api/v1/articles?category=categoryName&freeShipping=true&order=1
 
     @GetMapping(value = "/articles")
-    public ResponseEntity<List<ArticleDTO>> getArticles(@RequestParam(required = false) Map<String, String> allParams)
+    public ResponseEntity<List<ArticleDTO>> getArticles(
+            @RequestParam(required = false) Map<String, String> allParams)
             throws FileNotFoundException {
         System.out.println("Params size: " + allParams.size() + " and cointains: " + allParams.toString());
         return new ResponseEntity<>(articleService.process(allParams), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/purchase-request")
+    public ResponseEntity<PurchaseResponseDTO> purchase(
+            @RequestBody PurchaseRequestDTO purchaseRequestDTO) {
+        return new ResponseEntity<>(articleService.purchase(purchaseRequestDTO), HttpStatus.OK);
     }
 
 }
