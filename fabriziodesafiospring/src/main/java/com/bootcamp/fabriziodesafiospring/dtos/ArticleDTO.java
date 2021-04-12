@@ -1,8 +1,10 @@
 package com.bootcamp.fabriziodesafiospring.dtos;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class ArticleDTO {
     private String productId;
 
