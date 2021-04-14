@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,20 +39,20 @@ class ArticleControllerTest {
     static void setUp() throws IOException {
 
         articlesIndumentaria =
-                objectMapper.readValue(new File("src/main/resources/indumentaria.json"),
+                objectMapper.readValue(new File("src/main/resources/indumentariaDTO.json"),
                         new TypeReference<>() {
                         });
     }
 
     @Test
-    void getArticles() throws Exception {
+    void get() throws Exception {
 
         //mock service
         when(articleService.process(any())).thenReturn(articlesIndumentaria);
 
         //get /articles
         //map into objects
-        MvcResult mvcResult = mockMvc.perform(get("/articles"))
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/articles"))
                 .andExpect(status().isOk()).andReturn();
 
         List<ArticleDTO> responseArticles =
@@ -62,6 +63,6 @@ class ArticleControllerTest {
     }
 
     @Test
-    void purchase() {
+    void post() {
     }
 }

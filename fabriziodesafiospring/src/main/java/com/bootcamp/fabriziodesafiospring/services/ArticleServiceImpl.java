@@ -19,16 +19,15 @@ public class ArticleServiceImpl implements ArticleService {
 
     private final ArticleRepository articleRepository;
 
-    private final List<ArticleDTO> allArticles;
-
     @Autowired
-    public ArticleServiceImpl(ArticleRepository articleRepository) throws FileNotFoundException {
+    public ArticleServiceImpl(ArticleRepository articleRepository){
         this.articleRepository = articleRepository;
-        allArticles = mapIntoDtos(articleRepository.listAll());
     }
 
     @Override
-    public List<ArticleDTO> process(Map<String, String> allParams) {
+    public List<ArticleDTO> process(Map<String, String> allParams) throws FileNotFoundException {
+
+        final List<ArticleDTO> allArticles = mapIntoDtos(articleRepository.listAll());
 
         if (allParams.containsKey("order") && allParams.size() > 3 ||
                 !allParams.containsKey("order") && allParams.size() > 2) {
@@ -52,7 +51,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public PurchaseResponseDTO purchase(PurchaseRequestDTO purchaseRequestDTO) {
+    public PurchaseResponseDTO purchase(PurchaseRequestDTO purchaseRequestDTO) throws FileNotFoundException {
+        final List<ArticleDTO> allArticles = mapIntoDtos(articleRepository.listAll());
 
         //generate id ticket
         int ticketId = 123;

@@ -1,0 +1,82 @@
+[
+  {
+    "productId": 1,
+    "name": "Desmalezadora",
+    "brand": "Makita",
+    "quantity": 5,
+    "category": "Herramientas",
+    "price": "$9.600",
+    "freeShipping": "NO",
+    "prestige": "****"
+  },
+  {
+    "productId": 2,
+    "name": "Taladro",
+    "brand": "Black & Decker",
+    "quantity": 7,
+    "category": "Herramientas",
+    "price": "$12.500",
+    "freeShipping": "SI",
+    "prestige": "****"
+  },
+  {
+    "productId": 3,
+    "name": "Soldadora",
+    "brand": "Black & Decker",
+    "quantity": 10,
+    "category": "Herramientas",
+    "price": "$7.215",
+    "freeShipping": "SI",
+    "prestige": "***"
+  },
+  {
+    "productId": 4,
+    "name": "Zapatillas Deportivas",
+    "brand": "Adidas",
+    "quantity": 6,
+    "category": "Deportes",
+    "price": "$13.650",
+    "freeShipping": "SI",
+    "prestige": "*****"
+  },
+  {
+    "productId": 5,
+    "name": "Zapatillas Deportivas",
+    "brand": "Nike",
+    "quantity": 4,
+    "category": "Deportes",
+    "price": "$14.000",
+    "freeShipping": "SI",
+    "prestige": "*****"
+  },
+  {
+    "productId": 6,
+    "name": "Camiseta",
+    "brand": "Topper",
+    "quantity": 2,
+    "category": "Deportes",
+    "price": "$2.300",
+    "freeShipping": "NO",
+    "prestige": "***"
+  },
+  {
+    "productId": 7,
+    "name": "Redmi Note 9",
+    "brand": "Xiaomi",
+    "quantity": 15,
+    "category": "Celulares",
+    "price": "$40.000",
+    "freeShipping": "SI",
+    "prestige": "****"
+  },
+  {
+    "productId": 8,
+    "name": "Smartwatch",
+    "brand": "Noga",
+    "quantity": 20,
+    "category": "Celulares",
+    "price": "$1.900",
+    "freeShipping": "NO",
+    "prestige": "**"
+  }
+]

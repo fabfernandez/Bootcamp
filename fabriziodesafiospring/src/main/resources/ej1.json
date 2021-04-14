@@ -1,0 +1,42 @@
+[
+  {
+    "productId": 9,
+    "name": "Remera",
+    "brand": "Taverniti",
+    "quantity": 2,
+    "category": "Indumentaria",
+    "price": "$2.300",
+    "freeShipping": "NO",
+    "prestige": "***"
+  },
+  {
+    "productId": 10,
+    "name": "Chomba",
+    "brand": "Taverniti",
+    "quantity": 6,
+    "category": "Indumentaria",
+    "price": "$2.400",
+    "freeShipping": "NO",
+    "prestige": "***"
+  },
+  {
+    "productId": 11,
+    "name": "Medias",
+    "brand": "Mistral",
+    "quantity": 8,
+    "category": "Indumentaria",
+    "price": "$500",
+    "freeShipping": "NO",
+    "prestige": "*"
+  },
+  {
+    "productId": 12,
+    "name": "Short",
+    "brand": "Lacoste",
+    "quantity": 9,
+    "category": "Indumentaria",
+    "price": "$3.900",
+    "freeShipping": "SI",
+    "prestige": "***"
+  }
+]

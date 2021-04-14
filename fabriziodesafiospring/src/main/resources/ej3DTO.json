@@ -1,0 +1,22 @@
+[
+  {
+    "productId": "2",
+    "name": "Taladro",
+    "brand": "Black & Decker",
+    "quantity": "7",
+    "category": "Herramientas",
+    "price": "$12.500",
+    "freeShipping": "true",
+    "prestige": "****"
+  },
+  {
+    "productId": "3",
+    "name": "Soldadora",
+    "brand": "Black & Decker",
+    "quantity": "10",
+    "category": "Herramientas",
+    "price": "$7.215",
+    "freeShipping": "true",
+    "prestige": "***"
+  }
+]

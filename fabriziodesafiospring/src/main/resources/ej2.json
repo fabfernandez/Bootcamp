@@ -1,0 +1,42 @@
+[
+  {
+    "productId": 1,
+    "name": "Desmalezadora",
+    "brand": "Makita",
+    "quantity": 5,
+    "category": "Herramientas",
+    "price": "$9.600",
+    "freeShipping": "SI",
+    "prestige": "****"
+  },
+  {
+    "productId": 2,
+    "name": "Taladro",
+    "brand": "Black & Decker",
+    "quantity": 7,
+    "category": "Herramientas",
+    "price": "$12.500",
+    "freeShipping": "SI",
+    "prestige": "****"
+  },
+  {
+    "productId": 4,
+    "name": "Zapatillas Deportivas",
+    "brand": "Adidas",
+    "quantity": 6,
+    "category": "Deportes",
+    "price": "$13.650",
+    "freeShipping": "SI",
+    "prestige": "*****"
+  },
+  {
+    "productId": 5,
+    "name": "Zapatillas Deportivas",
+    "brand": "Nike",
+    "quantity": 4,
+    "category": "Deportes",
+    "price": "$14.000",
+    "freeShipping": "SI",
+    "prestige": "*****"
+  }
+]
