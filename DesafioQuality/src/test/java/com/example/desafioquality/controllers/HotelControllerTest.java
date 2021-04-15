@@ -8,5 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class HotelControllerTest {
 
+    private HotelController hotelController;
+
 
 }

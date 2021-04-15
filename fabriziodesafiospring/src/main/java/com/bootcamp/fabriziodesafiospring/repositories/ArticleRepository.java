@@ -6,5 +6,5 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 public interface ArticleRepository {
-    public List<Article> listAll() throws FileNotFoundException;
+    List<Article> listAll() throws FileNotFoundException;
 }
