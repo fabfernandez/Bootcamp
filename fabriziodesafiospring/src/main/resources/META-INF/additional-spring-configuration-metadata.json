@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "articles_path",
+      "type": "java.lang.String",
+      "description": "Description for articles_path."
+  }
+] }

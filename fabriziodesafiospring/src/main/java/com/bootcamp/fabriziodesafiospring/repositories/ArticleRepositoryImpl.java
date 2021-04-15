@@ -14,8 +14,6 @@ public class ArticleRepositoryImpl implements ArticleRepository {
 
     private String path;
 
-    //private MyBean mybean
-
     public ArticleRepositoryImpl(@Value("${articles_path:CSV/articles.csv}") String path) {
         this.path = path;
     }
