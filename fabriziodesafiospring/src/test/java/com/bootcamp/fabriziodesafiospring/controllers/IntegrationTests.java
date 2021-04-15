@@ -3,17 +3,19 @@ package com.bootcamp.fabriziodesafiospring.controllers;
 import com.bootcamp.fabriziodesafiospring.dtos.ArticleDTO;
 import com.bootcamp.fabriziodesafiospring.entities.Article;
 import com.bootcamp.fabriziodesafiospring.repositories.ArticleRepository;
-import com.bootcamp.fabriziodesafiospring.services.ArticleService;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MockMvc;    
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
