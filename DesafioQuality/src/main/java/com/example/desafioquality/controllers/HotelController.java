@@ -16,7 +16,7 @@ import java.util.Map;
 @RestController
 public class HotelController {
 
-    private HotelService hotelService;
+    private final HotelService hotelService;
 
     @Autowired
     public HotelController(HotelService hotelService) {
@@ -24,7 +24,6 @@ public class HotelController {
     }
 
     // get /hotels
-
     @GetMapping(value = "/hotels")
     public ResponseEntity<List<HotelDTO>> getHotels(
             @RequestParam(required = false) Map<String, String> allParams) throws IOException {

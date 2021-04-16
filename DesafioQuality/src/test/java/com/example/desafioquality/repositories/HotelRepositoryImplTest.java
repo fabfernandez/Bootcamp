@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -26,6 +27,7 @@ class HotelRepositoryImplTest {
     }
 
     @Test
+    @DisplayName("Load hotels from json to POJO")
     void loadHotels() throws IOException {
 
         List<HotelDTO> hotels = objectMapper.readValue(
@@ -33,6 +35,6 @@ class HotelRepositoryImplTest {
                 new TypeReference<>() {
                 });
 
-        Assertions.assertEquals(hotelRepository.loadHotels(), hotels);
+        Assertions.assertEquals(hotels, hotelRepository.loadHotels());
     }
 }
