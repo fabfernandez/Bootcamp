@@ -2,12 +2,13 @@ package com.example.desafioquality.services;
 
 import com.example.desafioquality.dtos.HotelDTO;
 import com.example.desafioquality.repositories.HotelRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -26,7 +27,7 @@ public class HotelServiceImpl implements HotelService {
     public List<HotelDTO> process(Map<String, String> allParams) throws IOException {
 
         //decide what to do with received parameters
-        //listAll or filter
+        //do nothing or filter
         List<HotelDTO> output = hotelRepository.loadHotels();
 
         if (allParams.containsKey("dateFrom") &&
@@ -34,25 +35,32 @@ public class HotelServiceImpl implements HotelService {
                 allParams.containsKey("city") &&
                 allParams.size() == 3
         ) {
-            for (Map.Entry<String, String> param : allParams.entrySet()) {
-                output = filter(output, param.getKey(), param.getValue());
-            }
+            output = filter(output, allParams.get("dateFrom"), allParams.get("dateTo"), allParams.get("city"));
         }
-        //if allParams.size() != 0 throw new BadRequestException()
+        //TODO if allParams.size() != 0 throw new BadRequestException()
         return output;
     }
 
-    private List<HotelDTO> filter(List<HotelDTO> hotels, String key, String value) {
-        return hotels.stream().filter(article -> {
-            try {
-                Method method = article.getClass().getMethod("get" + StringUtils.capitalize(key));
-                //return true if the value equals the method call
-                return method.invoke(article).equals(value);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
-            return false;
-        }).collect(Collectors.toList());
+    private List<HotelDTO> filter(List<HotelDTO> hotels, String dateFrom, String dateTo, String city) {
+        return hotels.stream().filter(hotel -> meetsConditions(hotel, dateFrom, dateTo, city))
+                .collect(Collectors.toList());
+    }
+
+    private boolean meetsConditions(HotelDTO hotel, String stringDateFrom, String stringDateTo, String city){
+
+        LocalDate dateFrom = parseDate(stringDateFrom);
+        LocalDate dateTo = parseDate(stringDateTo);
+        LocalDate hotelAvailableFrom = parseDate(hotel.getDateFrom());
+        LocalDate hotelAvailableTo = parseDate(hotel.getDateTo());
+
+        return city.equals(hotel.getCity()) &&
+                (dateFrom.isAfter(hotelAvailableFrom) || dateFrom.isEqual(hotelAvailableFrom)) &&
+                (dateTo.isBefore(hotelAvailableTo) || dateTo.isEqual(hotelAvailableTo));
+    }
+
+    private LocalDate parseDate(String date){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return LocalDate.parse(date, formatter);
     }
 }

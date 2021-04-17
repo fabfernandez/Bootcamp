@@ -73,7 +73,7 @@ class HotelServiceImplTest {
         Map<String,String> filters = new HashMap<>();
         filters.put("dateFrom", "10/02/2021");
         filters.put("dateTo", "20/03/2021");
-        filters.put("destination", "Puerto Iguazú");
+        filters.put("city", "Puerto Iguazú");
 
         Assertions.assertEquals(cataratasHotels, hotelService.process(filters));
     }

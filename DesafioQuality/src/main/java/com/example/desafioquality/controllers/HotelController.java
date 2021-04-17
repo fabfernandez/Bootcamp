@@ -27,6 +27,7 @@ public class HotelController {
     @GetMapping(value = "/hotels")
     public ResponseEntity<List<HotelDTO>> getHotels(
             @RequestParam(required = false) Map<String, String> allParams) throws IOException {
+        //TODO validate params
         return new ResponseEntity<>(hotelService.process(allParams), HttpStatus.OK);
     }
 
