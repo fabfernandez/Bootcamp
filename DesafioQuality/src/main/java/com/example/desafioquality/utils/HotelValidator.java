@@ -10,16 +10,16 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 public class HotelValidator {
 
     private HotelValidator() {
     }
 
     public static void validateParameters(Map<String, String> parameters) throws RuntimeException {
-
+        if (parameters.isEmpty()) return;
         //validate size
-        if (!(parameters.size() == 3 || parameters.size() == 0)) throw new BadParametersException(
-                "Too many or too few parameters");
+        if (parameters.size() != 3) throw new BadParametersException("Too many or too few parameters");
         //validate key names
         if (parameters.size() == 3 &&
                 !(parameters.containsKey("dateTo") &&
@@ -39,10 +39,7 @@ public class HotelValidator {
         if (!DateUtils.parseDate(dateFrom).isBefore(DateUtils.parseDate(dateTo))) throw new DateException(
                 "Date From must be before Date To.");
         //destination must be a String without special characters
-        String city = parameters.get("city");
-        Pattern p = Pattern.compile("[a-zA-Z]");
-        Matcher m = p.matcher(city);
-        if (!m.matches()) throw new BadParametersException("City name has unsupported characters");
+        validateNameString(parameters.get("city"));
         //TODO destination must exist, validate in repository layer
     }
 
@@ -53,5 +50,11 @@ public class HotelValidator {
         } catch (DateTimeParseException exception) {
             throw new DateException("Date format " + date + " not supported");
         }
+    }
+
+    private static void validateNameString(String name){
+        Pattern p = Pattern.compile("^[A-Za-z0-9\\u00C1\\u00C9\\u00CD\\u00D3\\u00DA\\u00DC\\u00E1\\u00E9\\u00ED\\u00F3\\u00FA\\u00FC\\u00D1\\u00F1 ]+$");
+        Matcher m = p.matcher(name);
+        if (!m.matches()) throw new BadParametersException("City name has unsupported characters");
     }
 }

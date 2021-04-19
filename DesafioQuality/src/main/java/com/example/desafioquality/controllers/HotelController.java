@@ -4,6 +4,7 @@ package com.example.desafioquality.controllers;
 import com.example.desafioquality.dtos.HotelDTO;
 
 import com.example.desafioquality.services.HotelService;
+import com.example.desafioquality.utils.HotelValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,10 +29,9 @@ public class HotelController {
     public ResponseEntity<List<HotelDTO>> getHotels(
             @RequestParam(required = false) Map<String, String> allParams) throws IOException {
 
-        //TODO validate allParams
-
         //TODO exception controller
 
+        HotelValidator.validateParameters(allParams);
         return new ResponseEntity<>(hotelService.process(allParams), HttpStatus.OK);
     }
 

@@ -1,6 +1,7 @@
 package com.example.desafioquality.services;
 
 import com.example.desafioquality.dtos.HotelDTO;
+import com.example.desafioquality.exceptions.CityDoesntExist;
 import com.example.desafioquality.repositories.HotelRepository;
 
 import com.example.desafioquality.utils.DateUtils;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -39,8 +39,14 @@ public class HotelServiceImpl implements HotelService {
 
 
     private List<HotelDTO> filter(List<HotelDTO> hotels, String dateFrom, String dateTo, String city) {
+        if (cityDoesntExist(hotels, city)) throw new CityDoesntExist(city);
+
         return hotels.stream().filter(hotel -> meetsConditions(hotel, dateFrom, dateTo, city))
                 .collect(Collectors.toList());
+    }
+
+    private boolean cityDoesntExist(List<HotelDTO> hotels, String city) {
+        return hotels.stream().noneMatch(hotel -> hotel.getCity().equals(city));
     }
 
     private boolean meetsConditions(HotelDTO hotel, String stringDateFrom, String stringDateTo, String city) {

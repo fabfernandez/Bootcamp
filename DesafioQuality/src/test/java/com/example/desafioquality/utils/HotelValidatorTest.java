@@ -68,7 +68,7 @@ class HotelValidatorTest {
     }
 
     @Test
-    @DisplayName("When city has unsupported characters then throw exception")
+    @DisplayName("When city value has unsupported characters then throw exception")
     void cityUnsupportedCharacters() {
         Map<String, String> params = new HashMap<>();
         params.put("dateFrom", "10/03/2021");
