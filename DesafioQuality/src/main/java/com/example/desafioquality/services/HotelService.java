@@ -1,5 +1,7 @@
 package com.example.desafioquality.services;
 
+import com.example.desafioquality.dtos.BookingRequestDTO;
+import com.example.desafioquality.dtos.BookingResponseDTO;
 import com.example.desafioquality.dtos.HotelDTO;
 
 import java.io.IOException;
@@ -10,4 +12,5 @@ public interface HotelService {
 
     List<HotelDTO> process(Map<String, String> allParams) throws IOException;
 
+    BookingResponseDTO book(BookingRequestDTO request) throws IOException;
 }

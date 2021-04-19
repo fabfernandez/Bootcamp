@@ -1,6 +1,10 @@
 package com.example.desafioquality.services;
 
+import com.example.desafioquality.dtos.BookingPetitionDTO;
+import com.example.desafioquality.dtos.BookingRequestDTO;
 import com.example.desafioquality.dtos.HotelDTO;
+import com.example.desafioquality.exceptions.CityDoesntExist;
+import com.example.desafioquality.exceptions.HotelNotAvailableException;
 import com.example.desafioquality.repositories.HotelRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,7 +34,6 @@ class HotelServiceImplTest {
     private static List<HotelDTO> aFewHotels;
     private static List<HotelDTO> cataratasHotels;
 
-
     @MockBean
     private HotelRepository hotelRepository;
 
@@ -56,7 +59,6 @@ class HotelServiceImplTest {
     void listAll() throws IOException {
 
         when(hotelRepository.loadHotels()).thenReturn(oneHotel);
-
         hotelService = new HotelServiceImpl(hotelRepository);
 
         Assertions.assertEquals(oneHotel, hotelService.process(new HashMap<>()));
@@ -67,14 +69,73 @@ class HotelServiceImplTest {
     void filterCase1() throws IOException {
 
         when(hotelRepository.loadHotels()).thenReturn(aFewHotels);
-
         hotelService = new HotelServiceImpl(hotelRepository);
 
-        Map<String,String> filters = new HashMap<>();
+        Map<String, String> filters = new HashMap<>();
         filters.put("dateFrom", "10/02/2021");
         filters.put("dateTo", "20/03/2021");
         filters.put("city", "Puerto Iguazú");
 
         Assertions.assertEquals(cataratasHotels, hotelService.process(filters));
+    }
+
+    @Test
+    @DisplayName("When destination received in process method doesnt exist, throw exception.")
+    void unknownDestinationProcess() throws IOException {
+
+        when(hotelRepository.loadHotels()).thenReturn(aFewHotels);
+        hotelService = new HotelServiceImpl(hotelRepository);
+
+        Map<String, String> filters = new HashMap<>();
+        filters.put("dateFrom", "10/02/2021");
+        filters.put("dateTo", "20/03/2021");
+        filters.put("city", "Ciudad Falsa");
+
+        Assertions.assertThrows(CityDoesntExist.class, () -> hotelService.process(filters));
+    }
+
+    @Test
+    @DisplayName("When destination received in book method doesnt exist, throw exception.")
+    void unknownDestinationBooking() throws IOException {
+
+        when(hotelRepository.loadHotels()).thenReturn(aFewHotels);
+        hotelService = new HotelServiceImpl(hotelRepository);
+
+        //load request from json
+        BookingRequestDTO request = objectMapper.readValue(
+                new File("src/test/java/resources/testBookingRequestWrongDestination.json"),
+                new TypeReference<>() {
+                });
+        Assertions.assertThrows(CityDoesntExist.class, () -> hotelService.book(request));
+    }
+
+    @Test
+    @DisplayName("When no hotel is available in the selected dates then throw exception.")
+    void noHotelsInSelectedDates() throws IOException {
+
+        when(hotelRepository.loadHotels()).thenReturn(aFewHotels);
+        hotelService = new HotelServiceImpl(hotelRepository);
+
+        //load request from json
+        BookingRequestDTO request = objectMapper.readValue(
+                new File("src/test/java/resources/testBookingRequestWrongDates.json"),
+                new TypeReference<>() {
+                });
+        Assertions.assertThrows(HotelNotAvailableException.class, () -> hotelService.book(request));
+    }
+
+    @Test
+    @DisplayName("When hotel code is not found between selected dates then throw exception.")
+    void noHotelCodeInSelectedDates() throws IOException {
+
+        when(hotelRepository.loadHotels()).thenReturn(aFewHotels);
+        hotelService = new HotelServiceImpl(hotelRepository);
+
+        //load request from json
+        BookingRequestDTO request = objectMapper.readValue(
+                new File("src/test/java/resources/testBookingRequestWrongCode.json"),
+                new TypeReference<>() {
+                });
+        Assertions.assertThrows(HotelNotAvailableException.class, () -> hotelService.book(request));
     }
 }
