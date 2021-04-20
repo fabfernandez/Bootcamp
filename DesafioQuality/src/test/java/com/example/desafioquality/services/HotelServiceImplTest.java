@@ -1,10 +1,10 @@
 package com.example.desafioquality.services;
 
-import com.example.desafioquality.dtos.BookingPetitionDTO;
 import com.example.desafioquality.dtos.BookingRequestDTO;
 import com.example.desafioquality.dtos.HotelDTO;
 import com.example.desafioquality.exceptions.CityDoesntExist;
 import com.example.desafioquality.exceptions.HotelNotAvailableException;
+import com.example.desafioquality.exceptions.WrongRoomTypeException;
 import com.example.desafioquality.repositories.HotelRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -138,4 +138,50 @@ class HotelServiceImplTest {
                 });
         Assertions.assertThrows(HotelNotAvailableException.class, () -> hotelService.book(request));
     }
+
+    @Test
+    @DisplayName("When roomType is unknown then throw exception.")
+    void unknownRoomType() throws IOException {
+
+        when(hotelRepository.loadHotels()).thenReturn(aFewHotels);
+        hotelService = new HotelServiceImpl(hotelRepository);
+
+        //load request from json
+        BookingRequestDTO request = objectMapper.readValue(
+                new File("src/test/java/resources/testBookingRequestWrongRoomType.json"),
+                new TypeReference<>() {
+                });
+        Assertions.assertThrows(WrongRoomTypeException.class, () -> hotelService.book(request));
+    }
+
+    @Test
+    @DisplayName("When selected RoomType is Triple but the available room is Doble then throw exception.")
+    void selectedRoomTypeNotAvailable() throws IOException {
+
+        when(hotelRepository.loadHotels()).thenReturn(aFewHotels);
+        hotelService = new HotelServiceImpl(hotelRepository);
+
+        //load request from json
+        BookingRequestDTO request = objectMapper.readValue(
+                new File("src/test/java/resources/testBookingRequestAnotherRoomType.json"),
+                new TypeReference<>() {
+                });
+        Assertions.assertThrows(WrongRoomTypeException.class, () -> hotelService.book(request));
+    }
+
+    @Test
+    @DisplayName("When selected roomType doesn't match the number of people in the request then throw exception.")
+    void roomTypeTooSmall() throws IOException {
+
+        when(hotelRepository.loadHotels()).thenReturn(aFewHotels);
+        hotelService = new HotelServiceImpl(hotelRepository);
+
+        //load request from json
+        BookingRequestDTO request = objectMapper.readValue(
+                new File("src/test/java/resources/testBookingRequestSingleFor2.json"),
+                new TypeReference<>() {
+                });
+        Assertions.assertThrows(WrongRoomTypeException.class, () -> hotelService.book(request));
+    }
+
 }

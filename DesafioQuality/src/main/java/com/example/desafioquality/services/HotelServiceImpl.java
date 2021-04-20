@@ -1,8 +1,6 @@
 package com.example.desafioquality.services;
 
-import com.example.desafioquality.dtos.BookingRequestDTO;
-import com.example.desafioquality.dtos.BookingResponseDTO;
-import com.example.desafioquality.dtos.HotelDTO;
+import com.example.desafioquality.dtos.*;
 import com.example.desafioquality.exceptions.CityDoesntExist;
 import com.example.desafioquality.exceptions.HotelNotAvailableException;
 import com.example.desafioquality.exceptions.WrongRoomTypeException;
@@ -28,6 +26,7 @@ public class HotelServiceImpl implements HotelService {
     }
 
     private static final Map<String, Integer> roomMap;
+    private static final Map<Integer, Double> duesToInterestMap;
 
     static {
         roomMap = Map.of(
@@ -35,6 +34,10 @@ public class HotelServiceImpl implements HotelService {
                 "Doble", 2,
                 "Triple", 3,
                 "Multiple", 4
+        );
+        duesToInterestMap = Map.of(
+                3, 1.10,
+                6,1.15
         );
     }
 
@@ -86,11 +89,47 @@ public class HotelServiceImpl implements HotelService {
         if (!roomMap.get(roomType).equals(pplQuantity))
             throw new WrongRoomTypeException(roomType, roomMap.get(roomType));
 
-        //calculate amount based on room cost
-        //calculate interest based on card type and dues
-        //calculate total $
+        // calculate amount based on room cost
+        double amount = Double.parseDouble(requestedHotel.get().getPrice());
 
-        return null;
+        // calculate interest based on card type and dues
+        String cardType = request.getBooking().getPaymentMethod().getType();
+        Integer dues = request.getBooking().getPaymentMethod().getDues();
+        Double interest;
+        if (cardType.equals("CREDIT")){
+            interest = duesToInterestMap.get(dues);
+        }else{
+            interest = 0.0;
+        }
+        // calculate total
+        double total;
+        if (interest == 0.0){
+            total = amount;
+        }else {
+            total = amount * interest;
+        }
+        // build response and return
+        List<PeopleDTO> people = request.getBooking().getPeople();
+        BookingDTO bookingDTO = new BookingDTO(
+                dateFrom,
+                dateTo,
+                destination,
+                hotelCode,
+                people.size(),
+                roomType,
+                people
+                );
+        StatusCodeDTO statusCodeDTO = new StatusCodeDTO(200,
+                "Booking completed successfully.");
+
+        return new BookingResponseDTO(
+                request.getUserName(),
+                amount,
+                interest,
+                total,
+                bookingDTO,
+                statusCodeDTO
+        );
     }
 
 

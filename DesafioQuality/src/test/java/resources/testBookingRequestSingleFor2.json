@@ -14,13 +14,6 @@
         "lastName": "Gomez",
         "birthDate": "10/11/1982",
         "mail": "pepitogomez@gmail.com"
-      },
-      {
-        "dni": "13345678",
-        "name": "Fulanito",
-        "lastName": "Gomez",
-        "birthDate": "10/11/1983",
-        "mail": "fulanitogomez@gmail.com"
       }
     ],
     "paymentMethod": {
