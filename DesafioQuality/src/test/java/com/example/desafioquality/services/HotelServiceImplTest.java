@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -23,7 +24,6 @@ import java.util.Map;
 
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
 class HotelServiceImplTest {
 
     private HotelService hotelService;
@@ -34,8 +34,7 @@ class HotelServiceImplTest {
     private static List<HotelDTO> aFewHotels;
     private static List<HotelDTO> cataratasHotels;
 
-    @MockBean
-    private HotelRepository hotelRepository;
+    private final HotelRepository hotelRepository = Mockito.mock(HotelRepository.class);
 
     @BeforeAll
     static void setUp() throws IOException {

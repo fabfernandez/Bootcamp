@@ -21,14 +21,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 
-@SpringBootTest
 class HotelControllerTest {
 
     private HotelController hotelController;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @MockBean
-    private HotelService hotelService;
+    private final HotelService hotelService = Mockito.mock(HotelService.class);
 
     @Test
     void getAllHotels() throws IOException {
