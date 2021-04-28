@@ -16,5 +16,5 @@ public class Agenda {
     @ManyToOne
     private Odontologist odontologist;
     @OneToMany(mappedBy = "id")
-    private Set<Appointment> appointment;
+    private Set<Appointment> appointments;
 }
