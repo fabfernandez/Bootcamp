@@ -48,11 +48,9 @@ public class AgendaService implements IAgendaService {
 
     @Override
     @Transactional
-    public void patchAgenda(Long id, LocalDate date, Odontologist odontologist, Set<Appointment> appointments) {
+    public void patchAppointments(Long id, Set<Appointment> appointments) {
         Agenda agenda = repository.findById(id).orElseThrow();
         agenda.setAppointments(appointments);
-        agenda.setDate(date);
-        agenda.setOdontologist(odontologist);
         repository.save(agenda);
     }
 

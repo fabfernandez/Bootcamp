@@ -18,7 +18,7 @@ public interface IAgendaService {
 
     List<Agenda> getAllAgendas();
 
-    void patchAgenda(Long id, LocalDate date, Odontologist odontologist, Set<Appointment> appointments);
+    void patchAppointments(Long id, Set<Appointment> appointments);
 
     void putAgenda(Agenda newAgenda);
 }
