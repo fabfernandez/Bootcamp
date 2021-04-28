@@ -39,7 +39,6 @@ public class HotelController {
     @PostMapping("/booking")
     public ResponseEntity<BookingResponseDTO> book(@RequestBody BookingRequestDTO request) throws IOException {
 
-        //todo: validate request
         HotelValidator.validateParameters(request);
         return new ResponseEntity<>(hotelService.book(request), HttpStatus.OK);
     }
