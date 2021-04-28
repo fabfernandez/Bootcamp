@@ -1,2 +1,4 @@
-package com.example.demo.repository;public interface IAppointmentRepository {
+package com.example.demo.repository;
+
+public interface IAppointmentRepository {
 }
