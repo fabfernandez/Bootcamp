@@ -13,6 +13,7 @@ public class Appointment {
     private Long id;
     @OneToOne
     private Patient patient;
+    private String status;
     @OneToOne
     private Agenda agenda;
     private LocalTime timeFrom;
