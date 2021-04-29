@@ -56,7 +56,7 @@ public class OdontologistController {
      * @param id the id of the odontologist
      */
     @DeleteMapping("/odontologist/{id}")
-    public ResponseEntity deleteOdontologists(@RequestParam Long id) throws ApiException {
+    public ResponseEntity deleteOdontologists(@PathVariable Long id) throws ApiException {
         this.service.deleteOdontologist(id);
         return new ResponseEntity(HttpStatus.OK);
     }
