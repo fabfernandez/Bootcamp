@@ -5,6 +5,9 @@ import com.example.demo.entities.Agenda;
 import com.example.demo.entities.Odontologist;
 import com.example.demo.exceptions.ApiException;
 import com.example.demo.repository.IOdontologistRepository;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +20,8 @@ import java.util.Set;
 public class OdontologistService implements IOdontologistService {
 
     private IOdontologistRepository repository;
+
+    private ModelMapper mapper =  new ModelMapper();
 
     public OdontologistService(IOdontologistRepository repository) {
         this.repository = repository;
@@ -31,16 +36,7 @@ public class OdontologistService implements IOdontologistService {
     @Transactional(readOnly = true)
     public List<OdontologistDTO> getOdontologists() throws ApiException {
         List<Odontologist> odontologists = this.repository.findAll();
-        List<OdontologistDTO> odontologistList = new ArrayList<>();
-        for (int i = 0; i < odontologists.size(); i++) {
-            OdontologistDTO odontologist = new OdontologistDTO();
-            odontologist.setId(odontologists.get(i).getId());
-            odontologist.setDni(odontologists.get(i).getDni());
-            odontologist.setName(odontologists.get(i).getName());
-            odontologist.setLastName(odontologists.get(i).getLastName());
-//            odontologist.setAgenda((List<Agenda>) odontologists.get(i).getAgenda());
-            odontologistList.add(odontologist);
-        }
+        List<OdontologistDTO> odontologistList = mapper.map(odontologists, new TypeToken<ArrayList<OdontologistDTO>>() {}.getType());
         return odontologistList;
     }
 
@@ -56,30 +52,15 @@ public class OdontologistService implements IOdontologistService {
         if (odontologist.getId() != null) {
             Boolean isExists = this.repository.existsById(odontologist.getId());
             if (isExists) {
-                Odontologist odontologistAux = this.repository.getOne(odontologist.getId());
-                odontologistAux.setAgenda((Set<Agenda>) odontologist.getAgenda());
-                odontologistAux.setId(odontologist.getId());
-                odontologist.setDni(odontologist.getDni());
-                odontologistAux.setName(odontologist.getName());
-                odontologistAux.setLastName(odontologist.getLastName());
+                Odontologist odontologistAux = mapper.map(odontologist,Odontologist.class);
                 this.repository.save(odontologistAux);
             } else {
-                Odontologist odontologistAux = new Odontologist();
-                odontologistAux.setAgenda((Set<Agenda>) odontologist.getAgenda());
-                odontologistAux.setId(odontologist.getId());
-                odontologistAux.setDni(odontologist.getDni());
-                odontologistAux.setName(odontologist.getName());
-                odontologistAux.setLastName(odontologist.getLastName());
+                Odontologist odontologistAux = mapper.map(odontologist,Odontologist.class);
                 this.repository.save(odontologistAux);
             }
             return odontologist;
         } else {
-                Odontologist odontologistAux = new Odontologist();
-                odontologistAux.setAgenda((Set<Agenda>) odontologist.getAgenda());
-                odontologistAux.setId(odontologist.getId());
-                odontologistAux.setDni(odontologist.getDni());
-                odontologistAux.setName(odontologist.getName());
-                odontologistAux.setLastName(odontologist.getLastName());
+                Odontologist odontologistAux = mapper.map(odontologist,Odontologist.class);
                 this.repository.save(odontologistAux);
             }
             return odontologist;
@@ -97,13 +78,7 @@ public class OdontologistService implements IOdontologistService {
         Boolean isExists = this.repository.existsById(id);
         if (isExists) {
             Odontologist odontologistAux = this.repository.getOne(id);
-            OdontologistDTO odontologist = new OdontologistDTO();
-            odontologist.setId(odontologistAux.getId());
-            odontologist.setDni(odontologistAux.getDni());
-            odontologist.setName(odontologistAux.getName());
-            odontologist.setLastName(odontologistAux.getLastName());
-//            odontologist.setAgenda((List<Agenda>) odontologistAux.getAgenda());
-            this.repository.save(odontologistAux);
+            OdontologistDTO odontologist = mapper.map(odontologistAux,OdontologistDTO.class);
             return odontologist;
         } else {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Error: The Odontologist id does not Exist.");

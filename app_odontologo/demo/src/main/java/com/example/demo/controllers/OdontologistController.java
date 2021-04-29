@@ -18,9 +18,19 @@ public class OdontologistController {
     public OdontologistController(OdontologistService service) {
         this.service = service;
     }
+    /**
+     * Put endpoint /odontologist
+     *
+     * @param odontologist Odontologist dto
+     * @return a ResponseEntity with the save result
+     */
+    @PutMapping("/odontologist")
+    public ResponseEntity<OdontologistDTO> putOdontologist(@RequestBody OdontologistDTO odontologist) throws ApiException {
+        return new ResponseEntity<OdontologistDTO>(this.service.saveOdontologist(odontologist), HttpStatus.OK);
+    }
 
     /**
-     * Post and Patch endpoint /odontologist
+     * Post endpoint /odontologist
      *
      * @param odontologist Odontologist dto
      * @return a ResponseEntity with the save result
