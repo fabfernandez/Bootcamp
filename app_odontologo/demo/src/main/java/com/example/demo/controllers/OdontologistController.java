@@ -18,6 +18,7 @@ public class OdontologistController {
     public OdontologistController(OdontologistService service) {
         this.service = service;
     }
+
     /**
      * Post and Patch endpoint /odontologist
      *
@@ -25,10 +26,10 @@ public class OdontologistController {
      * @return a ResponseEntity with the save result
      */
     @PostMapping("/odontologist")
-    @PatchMapping("/odontologist")
     public ResponseEntity<OdontologistDTO> odontologist(@RequestBody OdontologistDTO odontologist) throws ApiException {
         return new ResponseEntity<OdontologistDTO>(this.service.saveOdontologist(odontologist), HttpStatus.OK);
     }
+
     /**
      * GET endpoint /odontologists
      *
@@ -38,6 +39,7 @@ public class OdontologistController {
     public ResponseEntity<List<OdontologistDTO>> odontologists() throws ApiException {
         return new ResponseEntity<List<OdontologistDTO>>(this.service.getOdontologists(), HttpStatus.OK);
     }
+
     /**
      * GET endpoint /odontologist/id
      *
@@ -45,16 +47,17 @@ public class OdontologistController {
      * @return a odontologist list
      */
     @GetMapping("/odontologist/{id}")
-    public ResponseEntity<OdontologistDTO> odontologist(@RequestParam Long id) throws ApiException {
+    public ResponseEntity<OdontologistDTO> odontologist(@PathVariable Long id) throws ApiException {
         return new ResponseEntity<OdontologistDTO>(this.service.findOdontologist(id), HttpStatus.OK);
     }
+
     /**
      * DELETE endpoint /odontologist/id
      *
      * @param id the id of the odontologist
      */
     @DeleteMapping("/odontologist/{id}")
-    public ResponseEntity deleteOdontologists(@RequestParam Long id) throws ApiException {
+    public ResponseEntity deleteOdontologists(@PathVariable Long id) throws ApiException {
         this.service.deleteOdontologist(id);
         return new ResponseEntity(HttpStatus.OK);
     }

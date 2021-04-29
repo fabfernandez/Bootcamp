@@ -38,7 +38,7 @@ public class OdontologistService implements IOdontologistService {
             odontologist.setDni(odontologists.get(i).getDni());
             odontologist.setName(odontologists.get(i).getName());
             odontologist.setLastName(odontologists.get(i).getLastName());
-            odontologist.setAgenda((List<Agenda>) odontologists.get(i).getAgenda());
+//            odontologist.setAgenda((List<Agenda>) odontologists.get(i).getAgenda());
             odontologistList.add(odontologist);
         }
         return odontologistList;
@@ -53,26 +53,37 @@ public class OdontologistService implements IOdontologistService {
      */
     @Override
     public OdontologistDTO saveOdontologist(OdontologistDTO odontologist) throws ApiException {
-        Boolean isExists = this.repository.existsById(odontologist.getId());
-        if (isExists) {
-            Odontologist odontologistAux = this.repository.getOne(odontologist.getId());
-            odontologistAux.setAgenda((Set<Agenda>) odontologist.getAgenda());
-            odontologistAux.setId(odontologist.getId());
-            odontologist.setDni(odontologist.getDni());
-            odontologistAux.setName(odontologist.getName());
-            odontologistAux.setLastName(odontologist.getLastName());
-            this.repository.save(odontologistAux);
+        if (odontologist.getId() != null) {
+            Boolean isExists = this.repository.existsById(odontologist.getId());
+            if (isExists) {
+                Odontologist odontologistAux = this.repository.getOne(odontologist.getId());
+                odontologistAux.setAgenda((Set<Agenda>) odontologist.getAgenda());
+                odontologistAux.setId(odontologist.getId());
+                odontologist.setDni(odontologist.getDni());
+                odontologistAux.setName(odontologist.getName());
+                odontologistAux.setLastName(odontologist.getLastName());
+                this.repository.save(odontologistAux);
+            } else {
+                Odontologist odontologistAux = new Odontologist();
+                odontologistAux.setAgenda((Set<Agenda>) odontologist.getAgenda());
+                odontologistAux.setId(odontologist.getId());
+                odontologistAux.setDni(odontologist.getDni());
+                odontologistAux.setName(odontologist.getName());
+                odontologistAux.setLastName(odontologist.getLastName());
+                this.repository.save(odontologistAux);
+            }
+            return odontologist;
         } else {
-            Odontologist odontologistAux = new Odontologist();
-            odontologistAux.setAgenda((Set<Agenda>) odontologist.getAgenda());
-            odontologistAux.setId(odontologist.getId());
-            odontologist.setDni(odontologist.getDni());
-            odontologistAux.setName(odontologist.getName());
-            odontologistAux.setLastName(odontologist.getLastName());
-            this.repository.save(odontologistAux);
+                Odontologist odontologistAux = new Odontologist();
+                odontologistAux.setAgenda((Set<Agenda>) odontologist.getAgenda());
+                odontologistAux.setId(odontologist.getId());
+                odontologistAux.setDni(odontologist.getDni());
+                odontologistAux.setName(odontologist.getName());
+                odontologistAux.setLastName(odontologist.getLastName());
+                this.repository.save(odontologistAux);
+            }
+            return odontologist;
         }
-        return odontologist;
-    }
 
     /**
      * Get one Odontologist by Id
@@ -91,7 +102,7 @@ public class OdontologistService implements IOdontologistService {
             odontologist.setDni(odontologistAux.getDni());
             odontologist.setName(odontologistAux.getName());
             odontologist.setLastName(odontologistAux.getLastName());
-            odontologist.setAgenda((List<Agenda>) odontologistAux.getAgenda());
+//            odontologist.setAgenda((List<Agenda>) odontologistAux.getAgenda());
             this.repository.save(odontologistAux);
             return odontologist;
         } else {
