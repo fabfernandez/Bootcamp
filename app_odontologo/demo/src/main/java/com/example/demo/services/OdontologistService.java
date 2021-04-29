@@ -67,7 +67,7 @@ public class OdontologistService implements IOdontologistService {
                 Odontologist odontologistAux = new Odontologist();
                 odontologistAux.setAgenda((Set<Agenda>) odontologist.getAgenda());
                 odontologistAux.setId(odontologist.getId());
-                odontologist.setDni(odontologist.getDni());
+                odontologistAux.setDni(odontologist.getDni());
                 odontologistAux.setName(odontologist.getName());
                 odontologistAux.setLastName(odontologist.getLastName());
                 this.repository.save(odontologistAux);
@@ -77,7 +77,7 @@ public class OdontologistService implements IOdontologistService {
                 Odontologist odontologistAux = new Odontologist();
                 odontologistAux.setAgenda((Set<Agenda>) odontologist.getAgenda());
                 odontologistAux.setId(odontologist.getId());
-                odontologist.setDni(odontologist.getDni());
+                odontologistAux.setDni(odontologist.getDni());
                 odontologistAux.setName(odontologist.getName());
                 odontologistAux.setLastName(odontologist.getLastName());
                 this.repository.save(odontologistAux);
