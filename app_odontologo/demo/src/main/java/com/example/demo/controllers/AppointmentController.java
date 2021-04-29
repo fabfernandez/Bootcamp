@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("api/appointment")
@@ -17,6 +16,11 @@ public class AppointmentController {
     @Autowired
     IAppointmentService service;
 
+    /**
+     * POST create a new appointment
+     * @param requestAppointmentDto request appointment
+     * @return created appointment
+     */
     @PostMapping
     private ResponseEntity<Appointment> saveAppointment(@RequestBody RequestAppointmentDto requestAppointmentDto){
         return new ResponseEntity<Appointment>(service.saveAppointment(requestAppointmentDto), HttpStatus.CREATED);

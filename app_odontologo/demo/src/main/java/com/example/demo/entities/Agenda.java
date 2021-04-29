@@ -1,9 +1,10 @@
 package com.example.demo.entities;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -12,7 +13,8 @@ public class Agenda {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private LocalDate date;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date date;
     @ManyToOne
     private Odontologist odontologist;
     @OneToMany(mappedBy = "id")

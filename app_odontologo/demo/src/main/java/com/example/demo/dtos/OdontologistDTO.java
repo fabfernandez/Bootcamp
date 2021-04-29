@@ -10,7 +10,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OdontologistDTO {
-
     private Long id;
     private String dni;
     private String name;

@@ -29,6 +29,9 @@ public class AppointmentService implements IAppointmentService {
         Agenda agenda = agendaService.findAgenda(requestAppointmentDto.getAgendaId());
         Patient patient = patientService.findPatient(requestAppointmentDto.getPatientId());
 
+
+
+
         if(agenda == null) return null;
         if(patient == null) return null;
 

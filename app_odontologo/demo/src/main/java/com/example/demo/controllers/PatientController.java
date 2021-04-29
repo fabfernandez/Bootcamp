@@ -18,7 +18,7 @@ public class PatientController {
     @PostMapping("save")
     private String savePatient(@RequestBody Patient patient){
       String message = iPatientService.savePatient(patient);
-        return message;
+      return message;
     }
 
     @GetMapping("/find/{id}")

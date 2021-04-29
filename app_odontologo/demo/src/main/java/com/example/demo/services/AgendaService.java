@@ -1,14 +1,18 @@
 package com.example.demo.services;
 
+import com.example.demo.dtos.AgendaDto;
 import com.example.demo.entities.Agenda;
 import com.example.demo.entities.Appointment;
 import com.example.demo.entities.Odontologist;
+import com.example.demo.exceptions.ApiException;
 import com.example.demo.repository.IAgendaRepository;
+import com.example.demo.repository.IOdontologistRepository;
+import com.example.demo.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -16,16 +20,26 @@ import java.util.Set;
 public class AgendaService implements IAgendaService {
 
     private final IAgendaRepository repository;
+    private final IOdontologistRepository odontologistRepository;
 
     @Autowired
-    public AgendaService(IAgendaRepository repository) {
+    public AgendaService(IAgendaRepository repository, IOdontologistRepository odontologistRepository) {
         this.repository = repository;
+        this.odontologistRepository = odontologistRepository;
     }
 
     @Override
     @Transactional
-    public void saveAgenda(Agenda agenda) {
-        repository.save(agenda);
+    public void saveAgenda(AgendaDto agenda) {
+        Agenda agendaToCreate = new Agenda();
+        Odontologist odontologist = odontologistRepository.findById(agenda.getOdontologistId()).orElseThrow();
+        agendaToCreate.setOdontologist(odontologist);
+        try {
+            agendaToCreate.setDate(DateUtils.getDateFromString(agenda.getDate()));
+        } catch (ApiException e) {
+            e.printStackTrace();
+        }
+        repository.save(agendaToCreate);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.dtos.AgendaDto;
 import com.example.demo.entities.Agenda;
 import com.example.demo.entities.Appointment;
 import com.example.demo.entities.Odontologist;
@@ -10,7 +11,7 @@ import java.util.Set;
 
 public interface IAgendaService {
 
-    void saveAgenda(Agenda agenda);
+    void saveAgenda(AgendaDto agenda);
 
     void deleteAgenda(Long id);
 
